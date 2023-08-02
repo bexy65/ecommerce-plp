@@ -80,7 +80,7 @@ function loadCategories(name) {
 
 function loadCategoriesFilter(name) {
   categoryFilter.innerHTML += `
-    <option value="${name}" onclick="fetchAllData('${name}')">${name}</option>
+    <option value="${name}">${name}</option>
   `;
 }
 
