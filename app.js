@@ -26,7 +26,12 @@ categoriesFetch.then((categories) => {
 productsFetch.then((products) => {
   for (let i = 0; i < products.length; i++) {
     if (products[i].category.id == 1) {
-      loadProducts(products[i].title, products[i].price, products[i].images[0]);
+      loadProducts(
+        products[i].title,
+        products[i].price,
+        products[i].images[0],
+        products[i].description
+      );
     }
   }
   console.log(products);
@@ -50,7 +55,12 @@ function fetchAllData(name) {
 
           for (let j = 0; j < categoryProducts.length; j++) {
             const product = categoryProducts[j];
-            loadProducts(product.title, product.price, product.category.image);
+            loadProducts(
+              product.title,
+              product.price,
+              product.category.image,
+              product.description
+            );
           }
         }
       }
@@ -66,13 +76,20 @@ function loadCategories(name) {
   `;
 }
 
-function loadProducts(title, price, image) {
+function loadProducts(title, price, image, desc) {
   productGrid.innerHTML += `
-    <div class="card">
-        <img src="${image}" alt="Product image"  class="d-inline-block align-text-top">
-        <h5 class="card-title">${title}</h5>
-        <p class="card-text">${price}</p>
-        <a href="#" class="btn btn-primary">ADD</a>
+    <div class="col-12 col-md-6 col-lg-4 p-2 mb-3 product-grid">
+      <div class="card h-100 d-flex flex-column">
+          <img src="${image}" alt="Product image"  class="d-inline-block align-text-top">
+          <div class="card-body p-2 m-0 fs-6 fs-md-5 fs-lg-4">
+            <h5 class="card-title">${title}</h5>
+            <p class="card-text">${desc}</p>
+          </div>
+          <p class="card-text ml-1 fs-4">$${price}</p>
+          <div class="d-flex justify-content-end">
+            <a href="#" class="btn btn-primary m-2">ADD</a>
+          </div>
+      </div>
     </div>
   `;
 }
