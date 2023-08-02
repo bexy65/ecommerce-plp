@@ -1,6 +1,7 @@
 let productGrid = document.getElementById('productGrid');
 let navbarList = document.querySelector('.navbar-nav');
 let category = document.querySelector('.category');
+let categoryFilter = document.getElementById('categorySelect');
 
 const categoryLength = 4;
 
@@ -20,6 +21,7 @@ const productsFetch = fetchData('https://api.escuelajs.co/api/v1/products');
 categoriesFetch.then((categories) => {
   for (let i = 0; i < categoryLength; i++) {
     loadCategories(categories[i].name);
+    loadCategoriesFilter(categories[i].name);
   }
 });
 
@@ -73,6 +75,12 @@ function loadCategories(name) {
     <li class="nav-item">
       <button class="nav-link category" onclick="fetchAllData('${name}')">${name}</button>
     </li>
+  `;
+}
+
+function loadCategoriesFilter(name) {
+  categoryFilter.innerHTML += `
+    <option value="${name}" onclick="fetchAllData('${name}')">${name}</option>
   `;
 }
 
