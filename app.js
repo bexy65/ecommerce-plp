@@ -2,6 +2,7 @@ let productGrid = document.getElementById('productGrid');
 let navbarList = document.querySelector('.navbar-nav');
 let category = document.querySelector('.category');
 let categoryFilter = document.getElementById('categorySelect');
+let priceRangeFilter = document.getElementById('priceRange');
 
 const categoryLength = 4;
 
@@ -31,36 +32,30 @@ productsFetch.then((products) => {
       loadProducts(
         products[i].title,
         products[i].price,
-        products[i].images[0],
+        products[i].images,
         products[i].description
       );
     }
   }
-  console.log(products);
 });
 
 function fetchAllData(name) {
   productGrid.innerHTML = '';
   Promise.all([categoriesFetch, productsFetch]).then(
     ([categories, products]) => {
-      console.log('clicked');
-
       for (let i = 0; i < categories.length; i++) {
         const categoryName = categories[i].name;
         if (categoryName === name) {
-          console.log('in if lock of promise all');
           const categoryProducts = products.filter(
             (product) => product.category.name === categoryName
           );
-
-          console.log(categoryProducts.length);
 
           for (let j = 0; j < categoryProducts.length; j++) {
             const product = categoryProducts[j];
             loadProducts(
               product.title,
               product.price,
-              product.category.image,
+              product.images,
               product.description
             );
           }
@@ -68,6 +63,51 @@ function fetchAllData(name) {
       }
     }
   );
+}
+
+function filterByPrice() {
+  const selectedCategory = categoryFilter.value;
+  const selectedPrice = parseInt(priceRangeFilter.value);
+  console.log(selectedPrice, selectedCategory);
+  productGrid.innerHTML = '';
+  Promise.all([categoriesFetch, productsFetch]).then(
+    ([categories, products]) => {
+      for (let i = 0; i < categories.length; i++) {
+        const categoryName = categories[i].name;
+        //cateogory logic
+        if (categoryName === selectedCategory) {
+          const filteredProducts = products.filter((product) => {
+            return (
+              product.category.name === selectedCategory &&
+              product.price <= selectedPrice
+            );
+          });
+
+          for (let j = 0; j < filteredProducts.length; j++) {
+            console.log('in for loop');
+            const product = filteredProducts[j];
+            loadProducts(
+              product.title,
+              product.price,
+              product.images,
+              product.description
+            );
+          }
+        }
+      }
+    }
+  );
+}
+
+function filterByPriceSlider() {
+  const minValue = parseInt(priceRangeFilter.min);
+  const maxValue = parseInt(priceRangeFilter.max);
+  const value = parseInt(priceRangeFilter.value);
+  const minPriceElement = document.getElementById('minPrice');
+  const maxPriceElement = document.getElementById('maxPrice');
+  minPriceElement.textContent = `$${value}`;
+  maxPriceElement.textContent = `$${maxValue}`;
+  filterByPrice();
 }
 
 function loadCategories(name) {
@@ -101,3 +141,5 @@ function loadProducts(title, price, image, desc) {
     </div>
   `;
 }
+
+priceRangeFilter.addEventListener('input', filterByPriceSlider);
