@@ -1,5 +1,34 @@
+body {
+   margin: 0;
+   padding: 0;
+   border: 1px solid black;
+}
+.container {
+   margin-top: 100px;
+   margin-left: 0;
+   margin-right: 0;
+}
+.breadcrumbs {
+   background-color: aqua;
+}
+
+.breadcrumbs > div {
+   border-left: 1px solid rgba(0, 0, 0, 0.32);
+   border-bottom: 1px solid rgba(0, 0, 0, 0.397);
+
+}
+
+.form-group {
+   margin-bottom: 30px;
+   border-bottom: 3px solid rgba(0, 0, 0, 0.395);
+}
+
 @media only screen and (min-width: 768px) {
    .navbar .navbar-toggler {
       display: none;
+   }
+
+   .btn.btn-primary {
+      width: 80px;
    }
 }
