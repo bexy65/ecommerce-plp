@@ -74,7 +74,32 @@ function filterByPrice() {
     ([categories, products]) => {
       for (let i = 0; i < categories.length; i++) {
         const categoryName = categories[i].name;
-        //cateogory logic
+        const categoryId = 1;
+        //cateogory filtering logic
+
+        if (selectedCategory === 'all') {
+          const filteredProducts = products.filter((product) => {
+            return (
+              product.category.id === categoryId &&
+              product.price <= selectedPrice
+            );
+          });
+
+          console.log(filteredProducts); //filtering works
+
+          for (let j = 0; j < filteredProducts.length; j++) {
+            console.log('in for loop');
+            const product = filteredProducts[j];
+            loadProducts(
+              product.title,
+              product.price,
+              product.images,
+              product.description
+            );
+          }
+          break;
+        }
+
         if (categoryName === selectedCategory) {
           const filteredProducts = products.filter((product) => {
             return (
