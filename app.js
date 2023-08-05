@@ -4,6 +4,7 @@ let category = document.querySelector('.category');
 let categoryFilter = document.getElementById('categorySelect');
 let priceRangeFilter = document.getElementById('priceRange');
 
+//using fake data hence im allowing only 4 categories
 const categoryLength = 4;
 
 const fetchData = async (url) => {
@@ -75,7 +76,6 @@ function filterByPrice() {
       for (let i = 0; i < categories.length; i++) {
         const categoryName = categories[i].name;
         const categoryId = 1;
-        //cateogory filtering logic
 
         if (selectedCategory === 'all') {
           const filteredProducts = products.filter((product) => {
@@ -85,10 +85,7 @@ function filterByPrice() {
             );
           });
 
-          console.log(filteredProducts); //filtering works
-
           for (let j = 0; j < filteredProducts.length; j++) {
-            console.log('in for loop');
             const product = filteredProducts[j];
             loadProducts(
               product.title,
