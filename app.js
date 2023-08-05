@@ -1,3 +1,5 @@
+// import { fetchData } from './api';
+
 let productGrid = document.getElementById('productGrid');
 let navbarList = document.querySelector('.navbar-nav');
 let category = document.querySelector('.category');
@@ -5,7 +7,7 @@ let categoryFilter = document.getElementById('categorySelect');
 let priceRangeFilter = document.getElementById('priceRange');
 
 //using fake data hence im allowing only 4 categories
-const categoryLength = 4;
+const categoryLength = 2;
 
 const fetchData = async (url) => {
   try {
@@ -17,8 +19,8 @@ const fetchData = async (url) => {
   }
 };
 
-const categoriesFetch = fetchData('https://api.escuelajs.co/api/v1/categories');
-const productsFetch = fetchData('https://api.escuelajs.co/api/v1/products');
+const categoriesFetch = fetchData('./data/categories.json');
+const productsFetch = fetchData('./data/products.json');
 
 categoriesFetch.then((categories) => {
   for (let i = 0; i < categoryLength; i++) {
@@ -28,12 +30,13 @@ categoriesFetch.then((categories) => {
 });
 
 productsFetch.then((products) => {
+  console.log(products);
   for (let i = 0; i < products.length; i++) {
     if (products[i].category.id == 1) {
       loadProducts(
         products[i].title,
         products[i].price,
-        products[i].images,
+        products[i].image,
         products[i].description
       );
     }
@@ -56,7 +59,7 @@ function fetchAllData(name) {
             loadProducts(
               product.title,
               product.price,
-              product.images,
+              product.image,
               product.description
             );
           }
@@ -69,7 +72,6 @@ function fetchAllData(name) {
 function filterByPrice() {
   const selectedCategory = categoryFilter.value;
   const selectedPrice = parseInt(priceRangeFilter.value);
-  console.log(selectedPrice, selectedCategory);
   productGrid.innerHTML = '';
   Promise.all([categoriesFetch, productsFetch]).then(
     ([categories, products]) => {
@@ -111,7 +113,7 @@ function filterByPrice() {
             loadProducts(
               product.title,
               product.price,
-              product.images,
+              product.image,
               product.description
             );
           }
