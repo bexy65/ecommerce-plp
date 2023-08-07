@@ -30,9 +30,8 @@ categoriesFetch.then((categories) => {
 });
 
 productsFetch.then((products) => {
-  console.log(products);
   for (let i = 0; i < products.length; i++) {
-    if (products[i].category.id == 1) {
+    if (products[i]) {
       loadProducts(
         products[i].title,
         products[i].price,
@@ -82,7 +81,7 @@ function filterByPrice() {
         if (selectedCategory === 'all') {
           const filteredProducts = products.filter((product) => {
             return (
-              product.category.id === categoryId &&
+              // product.category.id === categoryId &&
               product.price <= selectedPrice
             );
           });
@@ -92,7 +91,7 @@ function filterByPrice() {
             loadProducts(
               product.title,
               product.price,
-              product.images,
+              product.image,
               product.description
             );
           }
@@ -108,7 +107,6 @@ function filterByPrice() {
           });
 
           for (let j = 0; j < filteredProducts.length; j++) {
-            console.log('in for loop');
             const product = filteredProducts[j];
             loadProducts(
               product.title,
