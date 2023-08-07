@@ -6,6 +6,12 @@ let category = document.querySelector('.category');
 let categoryFilter = document.getElementById('categorySelect');
 let priceRangeFilter = document.getElementById('priceRange');
 
+let tag = 'Suits';
+const categoryId = 2;
+const firstCategory = 'Suits';
+const secondCategory = 'Dresses';
+const filterSectionCategoryValue = 'all';
+
 //using fake data hence im allowing only 4 categories
 const categoryLength = 2;
 
@@ -31,7 +37,7 @@ categoriesFetch.then((categories) => {
 
 productsFetch.then((products) => {
   for (let i = 0; i < products.length; i++) {
-    if (products[i]) {
+    if (products[i].category.id == categoryId) {
       loadProducts(
         products[i].title,
         products[i].price,
@@ -44,6 +50,8 @@ productsFetch.then((products) => {
 
 function fetchAllData(name) {
   productGrid.innerHTML = '';
+  tag = name;
+  console.log(tag);
   Promise.all([categoriesFetch, productsFetch]).then(
     ([categories, products]) => {
       for (let i = 0; i < categories.length; i++) {
@@ -78,11 +86,15 @@ function filterByPrice() {
         const categoryName = categories[i].name;
         const categoryId = 1;
 
-        if (selectedCategory === 'all') {
+        if (
+          (selectedCategory === filterSectionCategoryValue &&
+            tag === firstCategory) ||
+          (selectedCategory === filterSectionCategoryValue &&
+            tag === secondCategory)
+        ) {
           const filteredProducts = products.filter((product) => {
             return (
-              // product.category.id === categoryId &&
-              product.price <= selectedPrice
+              product.category.name === tag && product.price <= selectedPrice
             );
           });
 
